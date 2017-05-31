@@ -1,7 +1,11 @@
-FROM node:7.0.0
+FROM debian:8.8
 
 USER root
 
 WORKDIR /home/app
-RUN npm install mocha@^3.2.0 chai@^3.5.0
-RUN apt-get update && apt-get install -y openjdk-7-jre openjdk-7-jdk
+RUN apt-get update && apt-get install -y curl apt-utils
+RUN curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.deb.sh | bash
+RUN apt-get install -y gitlab-ci-multi-runner
+RUN apt-get install -y wget linux-image-virtual
+RUN wget https://get.docker.com/ -O setup_docker.sh && bash ./setup_docker.sh
+RUN docker --version
